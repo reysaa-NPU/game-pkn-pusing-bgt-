@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#070c1a">
+<title>ZONK! PPKn Challenge</title>
+<meta name="description" content="Game arcade tebak cup dan kuis PPKn. Temukan bola, hindari ZONK, jawab 25 soal pilihan ganda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ DEFINISI SVG (dipakai bersama) ============ -->
+<svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="cupGrad" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#6a9bff"></stop>
+      <stop offset="0.45" stop-color="#3a63f0"></stop>
+      <stop offset="1" stop-color="#1b2a86"></stop>
+    </linearGradient>
+    <linearGradient id="cupRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a8c4ff"></stop>
+      <stop offset="1" stop-color="#3358e0"></stop>
+    </linearGradient>
+    <radialGradient id="ballGrad" cx="0.32" cy="0.28" r="0.8">
+      <stop offset="0" stop-color="#ffffff"></stop>
+      <stop offset="0.25" stop-color="#bcd7ff"></stop>
+      <stop offset="0.6" stop-color="#4c8dff"></stop>
+      <stop offset="1" stop-color="#1e3fbf"></stop>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true">
+  <span class="glow glow-blue"></span>
+  <span class="glow glow-violet"></span>
+  <span class="glow glow-yellow"></span>
+  <span class="grid"></span>
+</div>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <a class="brand" href="#" id="brand-home" aria-label="Kembali ke halaman pembuka">
+      <span class="brand-mark">Z<span>!</span></span>
+      <span class="brand-text">
+        <b>ZONK!</b>
+        <small>PPKn Challenge</small>
+      </span>
+    </a>
+
+    <div class="top-actions">
+      <div class="speed-group" role="group" aria-label="Kecepatan pengacakan cup">
+        <span class="speed-label">ACAK</span>
+        <button class="speed-btn" type="button" data-speed="normal">Normal</button>
+        <button class="speed-btn active" type="button" data-speed="cepat">Cepat</button>
+      </div>
+      <button class="icon-btn restart-btn" id="btn-restart" type="button" aria-label="Mulai ulang permainan" title="Mulai ulang permainan" hidden>
+        <span aria-hidden="true">&#8635;</span>
+        <span class="restart-text">MULAI ULANG</span>
+      </button>
+      <button class="icon-btn" id="btn-mute" type="button" aria-pressed="false" aria-label="Matikan suara" title="Suara">
+        <span id="mute-icon">&#128266;</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HALAMAN PEMBUKA ================= -->
+    <section id="screen-start" class="screen active" aria-labelledby="start-title">
+      <div class="start-grid">
+        <div class="hero">
+          <span class="kicker">Game arcade PPKn</span>
+          <h1 class="logo-title" id="start-title">ZONK<span class="bang">!</span></h1>
+          <p class="logo-sub">PPKn Challenge</p>
+          <p class="lede">Temukan bola di bawah cup, hindari ZONK, dan jawab soal PPKn. Setiap pilihan menentukan nilaimu.</p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-xl" id="btn-start" type="button">
+              MULAI BERMAIN <span class="btn-arrow">&#9654;</span>
+            </button>
+          </div>
+
+          <div class="hero-stats">
+            <div><b>6</b><span>cup</span></div>
+            <div><b>1</b><span>bola</span></div>
+            <div><b>25</b><span>soal</span></div>
+            <div><b>100</b><span>nilai maks</span></div>
+          </div>
+        </div>
+
+        <aside class="how-card">
+          <div class="how-head">
+            <h2>Cara main</h2>
+            <span class="how-chip">Cepat &amp; seru</span>
+          </div>
+          <ol class="how-list">
+            <li><b>Pilih satu cup.</b> Ada 1 bola tersembunyi di antara 6 cup yang terus diacak.</li>
+            <li><b>Ketemu bola?</b> +1 poin bola. Bola disembunyikan lagi dan cup diacak ulang.</li>
+            <li><b>Kena ZONK?</b> Cup hilang dan kamu mendapat satu soal PPKn.</li>
+            <li><b>Jawab benar</b> +4 nilai. <b>Skip</b> butuh 1 poin bola dan memberi +2 nilai.</li>
+            <li>Sesi selesai setelah <b>25 soal</b> terjawab atau di-skip.</li>
+          </ol>
+          <p class="how-note">Poin bola dan nilai PPKn dihitung terpisah. Nilai maksimal 100.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= AREA PERMAINAN ================= -->
+    <section id="screen-game" class="screen" aria-labelledby="game-status">
+      <div class="hud">
+        <div class="stat stat-ball">
+          <span class="stat-label">Poin bola</span>
+          <b class="stat-value" id="hud-poin">0</b>
+          <span class="stat-hint">untuk skip</span>
+        </div>
+        <div class="stat stat-score">
+          <span class="stat-label">Nilai PPKn</span>
+          <b class="stat-value" id="hud-nilai">0</b>
+          <span class="stat-hint">dari 100</span>
+        </div>
+        <div class="stat stat-soal">
+          <span class="stat-label">Soal</span>
+          <b class="stat-value" id="hud-soal">0/25</b>
+          <span class="stat-hint">terpakai</span>
+        </div>
+        <div class="hud-bar" aria-hidden="true"><i id="hud-bar-fill"></i></div>
+      </div>
+
+      <div class="arena-head">
+        <p class="status" id="game-status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="status-text">Bersiap...</span>
+        </p>
+        <span class="cup-count" id="cup-count">6 CUP</span>
+      </div>
+
+      <div class="cup-stage" id="cup-stage" data-phase="idle" aria-label="Area cup"></div>
+
+      <p class="arena-tip" id="arena-tip">Tekan cup untuk menebak. Cup tidak bisa dipilih saat sedang diacak.</p>
+    </section>
+
+    <!-- ================= HALAMAN HASIL ================= -->
+    <section id="screen-result" class="screen" aria-labelledby="result-title">
+      <div class="result-wrap">
+        <span class="kicker">Sesi selesai</span>
+        <h2 class="result-title" id="result-title">Hasil <span>ZONK!</span></h2>
+        <p class="result-sub" id="result-sub">&mdash;</p>
+
+        <div class="result-grid">
+          <div class="score-hero">
+            <div class="score-big">
+              <b id="result-nilai">0</b><span>/100</span>
+            </div>
+            <p class="score-predikat" id="result-predikat">&mdash;</p>
+            <div class="score-bar" aria-hidden="true"><i id="result-bar"></i></div>
+          </div>
+
+          <div class="result-stats">
+            <div><b id="result-benar">0</b><span>Benar</span></div>
+            <div><b id="result-salah">0</b><span>Salah</span></div>
+            <div><b id="result-skip">0</b><span>Skip</span></div>
+            <div><b id="result-bola">0</b><span>Bola ditemukan</span></div>
+            <div><b id="result-poin">0</b><span>Sisa poin bola</span></div>
+            <div><b id="result-akurasi">0%</b><span>Ketepatan</span></div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary btn-lg" id="btn-replay" type="button">MAIN LAGI <span class="btn-arrow">&#8635;</span></button>
+          <button class="btn btn-ghost btn-lg" id="btn-home" type="button">Ke pembuka</button>
+        </div>
+        <p class="result-note">Nilai maksimal 100 = 25 jawaban benar. Ketepatan dihitung dari soal yang dijawab, tanpa menghitung skip.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ================= PANEL SOAL ================= -->
+<div class="overlay" id="q-overlay" hidden>
+  <div class="q-panel" role="dialog" aria-modal="true" aria-labelledby="q-text">
+    <div class="q-top">
+      <span class="zonk-badge">ZONK!</span>
+      <span class="q-progress" id="q-progress">SOAL 01 / 25</span>
+      <span class="q-ball" id="q-ball">&#9679; 0 BOLA</span>
+    </div>
+
+    <h2 class="q-text" id="q-text">&mdash;</h2>
+    <div class="q-options" id="q-options" role="group" aria-label="Pilihan jawaban"></div>
+
+    <div class="q-feedback" id="q-feedback" hidden aria-live="polite">
+      <div class="q-fb-head">
+        <b id="q-fb-title">&mdash;</b>
+        <span id="q-fb-points">&mdash;</span>
+      </div>
+      <p id="q-fb-text">&mdash;</p>
+      <p class="q-fb-key" id="q-fb-key">&mdash;</p>
+    </div>
+
+    <div class="q-actions" id="q-actions">
+      <button class="btn btn-primary btn-block" id="btn-confirm" type="button" disabled>KONFIRMASI JAWABAN</button>
+      <button class="btn btn-skip btn-block" id="btn-skip" type="button">SKIP SOAL &middot; &minus;1 BOLA &middot; +2 NILAI</button>
+    </div>
+
+    <button class="btn btn-again btn-block" id="btn-again" type="button" hidden>COBA LAGI <span class="btn-arrow">&rarr;</span></button>
+  </div>
+</div>
+
+<!-- ================= BANNER & EFEK ================= -->
+<div class="banner" id="banner" role="status" aria-live="assertive" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="fx-layer" id="fx" aria-hidden="true"></div>
+
+<script src="js/soal.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
