@@ -206,3 +206,4 @@ Catatan pengukuran: **ketepatan** dihitung dari `benar / (benar + salah)`, yaitu
 - Audio memerlukan interaksi pengguna pertama (klik MULAI BERMAIN) karena kebijakan autoplay browser.
 - Font Google memerlukan koneksi internet; tersedia fallback font sistem.
 - Folder `arsip-pilar/` berisi dokumentasi proyek lama dan tidak dipakai oleh game ini.
+# game-pkn-pusing-bgt-
