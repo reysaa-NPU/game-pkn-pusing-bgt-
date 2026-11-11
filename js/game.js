@@ -1,4 +1,4 @@
-git /* ============================================================
+/* ============================================================
    ZONK! PPKn Challenge — logika permainan
    ------------------------------------------------------------
    Alur:
@@ -912,7 +912,8 @@ function startGame() {
   state.skip = 0;
   state.bolaDitemukan = 0;
 
-  state.soalDeck = shuffleArray(BANK_SOAL);
+  // Bank berisi 30 soal; setiap sesi memakai 25 soal acak tanpa ulang.
+  state.soalDeck = shuffleArray(BANK_SOAL).slice(0, CONFIG.TOTAL_SOAL);
   state.soalIndex = 0;
   state.activeSoal = null;
   state.selectedOption = null;

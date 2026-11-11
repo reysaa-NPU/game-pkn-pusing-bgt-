@@ -47,7 +47,7 @@ game_PPKN/
 ├── css/
 │   └── style.css       # Tema arcade, cup SVG, animasi, responsif, reduced-motion
 ├── js/
-│   ├── soal.js         # BANK_SOAL — 25 pertanyaan PPKn (data terpisah)
+│   ├── soal.js         # BANK_SOAL — 30 pertanyaan PPKn (data terpisah)
 │   └── game.js         # Logika permainan, shuffle, skor, audio, state
 ├── arsip-pilar/        # Dokumentasi proyek lama (PILAR Pancasila), tidak dipakai
 └── README.md
@@ -129,7 +129,7 @@ Sesi berakhir setelah **25 soal** terjawab atau di-skip. Halaman hasil menampilk
 - Persentase ketepatan
 - Tombol **MAIN LAGI** (reset penuh) dan **Ke pembuka**
 
-**MAIN LAGI** mereset poin, nilai, hitungan, jumlah cup, posisi bola, dan mengacak ulang urutan 25 soal.
+**MAIN LAGI** mereset poin, nilai, hitungan, jumlah cup, posisi bola, dan memilih ulang 25 soal acak dari 30 soal di bank.
 
 ---
 
@@ -177,7 +177,7 @@ Efek suara dibuat dengan **Web Audio API** (tanpa file audio eksternal): klik, s
 
 Pengujian otomatis berbasis Chrome DevTools Protocol (bukan bagian dari project) mencakup:
 
-- ✅ 25 soal unik, setiap soal 4 pilihan, semua indeks jawaban valid.
+- ✅ 30 soal di bank, semuanya 4 pilihan dengan indeks jawaban valid; setiap sesi memilih 25 soal unik.
 - ✅ 6 cup aktif saat mulai dan setelah setiap shuffle; semua cup berada di dalam arena.
 - ✅ Menemukan bola → `+1` poin, banner tampil, mini-ball tampil, bola berpindah ke cup lain setelah reshuffle.
 - ✅ ZONK → cup keluar (6 → 5), panel soal terbuka, progres `SOAL 01 / 25`, 4 opsi.
@@ -202,7 +202,7 @@ Catatan pengukuran: **ketepatan** dihitung dari `benar / (benar + salah)`, yaitu
 
 - Permainan dapat berjalan lebih lama dari 25 soal jika pemain terus menemukan bola; sesi hanya berakhir setelah **25 soal** terpakai, sesuai spesifikasi. Tidak ada batas waktu atau batas tebakan.
 - Tidak ada backend, login, atau papan skor online. Semua data sesi hanya di memori; yang disimpan di `localStorage` hanya preferensi kecepatan dan mute.
-- Bank soal berisi tepat 25 soal, sehingga setiap sesi memakai seluruh bank (urutan berbeda).
+- Bank soal berisi 30 soal, sedangkan satu sesi memakai 25 soal acak. Artinya 5 soal tidak muncul di sesi tersebut dan bisa muncul di sesi berikutnya. Ini menjaga nilai maksimal tetap 100 (25 soal × 4 nilai).
 - Audio memerlukan interaksi pengguna pertama (klik MULAI BERMAIN) karena kebijakan autoplay browser.
 - Font Google memerlukan koneksi internet; tersedia fallback font sistem.
 - Folder `arsip-pilar/` berisi dokumentasi proyek lama dan tidak dipakai oleh game ini.
