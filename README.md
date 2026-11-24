@@ -29,8 +29,6 @@ Semua fitur berjalan dari `file://`, tetapi server lokal lebih nyaman untuk peng
 # Python 3
 python3 -m http.server 8000
 
-# atau Node.js (jika tersedia)
-npx serve .
 ```
 
 Lalu buka <http://localhost:8000>.

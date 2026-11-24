@@ -1,27 +1,27 @@
 /* ============================================================
    ZONK! PPKn Challenge
-   Tema: modern casual arcade — dark navy, biru, kuning.
+   Tema: papan permainan malam — tinta gelap, kartu kertas, aksen kunyit.
    ============================================================ */
 
 :root {
-  --bg: #060a16;
-  --bg-2: #0a1124;
-  --card: #111a33;
-  --card-2: #16213f;
-  --card-3: #1c2a51;
-  --line: rgba(124, 154, 255, 0.16);
-  --line-strong: rgba(124, 154, 255, 0.3);
-  --ink: #eef3ff;
-  --muted: #8b97c4;
-  --blue: #4c8dff;
-  --blue-deep: #2b62ff;
-  --cyan: #37e0ff;
-  --yellow: #ffc93c;
-  --orange: #ff9f2e;
+  --bg: #10131b;
+  --bg-2: #171b27;
+  --card: #1d2331;
+  --card-2: #252d3c;
+  --card-3: #30394a;
+  --line: rgba(220, 205, 170, 0.16);
+  --line-strong: rgba(220, 205, 170, 0.34);
+  --ink: #f4f0e7;
+  --muted: #a6a8b1;
+  --blue: #5686c7;
+  --blue-deep: #3f67a3;
+  --cyan: #8fd4ca;
+  --yellow: #e9bd59;
+  --orange: #d78345;
   --green: #36d98b;
   --red: #ff4d6d;
-  --violet: #8b5cf6;
-  --radius: 20px;
+  --violet: #9b7fc0;
+  --radius: 18px;
   --shadow-pop: 0 10px 0 -2px rgba(0, 0, 0, 0.45);
   --font-display: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -65,8 +65,9 @@ button { font-family: inherit; }
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(1200px 700px at 50% -10%, #101d44 0%, transparent 60%),
-    linear-gradient(180deg, #070c1a 0%, #060a16 55%, #050812 100%);
+    radial-gradient(900px 540px at 12% 0%, rgba(86, 134, 199, 0.18) 0%, transparent 62%),
+    radial-gradient(760px 480px at 100% 8%, rgba(231, 183, 77, 0.10) 0%, transparent 60%),
+    linear-gradient(180deg, #171b27 0%, #10131b 58%, #0d1016 100%);
 }
 
 .glow {
@@ -98,9 +99,9 @@ button { font-family: inherit; }
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(124, 154, 255, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 154, 255, 0.055) 1px, transparent 1px);
-  background-size: 54px 54px;
+    linear-gradient(rgba(220, 205, 170, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 205, 170, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 15%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 15%, transparent 78%);
 }
@@ -1197,3 +1198,29 @@ body.modal-open { overflow: hidden; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Sentuhan papan permainan: sedikit tidak simetris, tetap terbaca. */
+.how-card,
+.hud,
+.result-wrap {
+  border-color: rgba(220, 205, 170, 0.24);
+  background: linear-gradient(145deg, rgba(37, 45, 60, 0.96), rgba(25, 30, 42, 0.96));
+}
+
+.how-card { transform: rotate(0.45deg); }
+.hero .logo-title { letter-spacing: -0.07em; }
+.kicker { color: #e9bd59; border-color: rgba(233, 189, 89, 0.36); background: rgba(233, 189, 89, 0.08); }
+.btn-primary { background: linear-gradient(145deg, #648fca, #3f67a3); box-shadow: 0 6px 0 #294774, 0 10px 26px rgba(63, 103, 163, 0.28); }
+.btn-skip { background: linear-gradient(145deg, #e9bd59, #d78345); }
+.q-panel {
+  border-color: rgba(233, 189, 89, 0.34);
+  background:
+    radial-gradient(500px 220px at 94% -12%, rgba(233, 189, 89, 0.14), transparent 70%),
+    linear-gradient(155deg, #283246 0%, #1b2331 60%, #171c28 100%);
+}
+.q-text { font-family: var(--font-body); font-weight: 700; letter-spacing: -0.025em; }
+.q-progress { color: #d9c78f; letter-spacing: 0.08em; text-transform: none; }
+.option { background: rgba(244, 240, 231, 0.045); border-radius: 10px; }
+.option:hover:not(:disabled), .option.selected { border-color: var(--cyan); background: rgba(143, 212, 202, 0.12); }
+.option.selected { box-shadow: 0 0 0 3px rgba(143, 212, 202, 0.12); }
+.option.selected .opt-letter { background: var(--cyan); color: #16212a; }

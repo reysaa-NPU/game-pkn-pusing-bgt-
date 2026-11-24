@@ -54,7 +54,7 @@
 
     <div class="top-actions">
       <div class="speed-group" role="group" aria-label="Kecepatan pengacakan cup">
-        <span class="speed-label">ACAK</span>
+        <span class="speed-label">IRAMA</span>
         <button class="speed-btn" type="button" data-speed="normal">Normal</button>
         <button class="speed-btn active" type="button" data-speed="cepat">Cepat</button>
       </div>
@@ -80,7 +80,7 @@
 
           <div class="hero-actions">
             <button class="btn btn-primary btn-xl" id="btn-start" type="button">
-              MULAI BERMAIN <span class="btn-arrow">&#9654;</span>
+              Mulai bermain <span class="btn-arrow">&#9654;</span>
             </button>
           </div>
 
@@ -135,7 +135,7 @@
           <span class="status-dot" aria-hidden="true"></span>
           <span id="status-text">Bersiap...</span>
         </p>
-        <span class="cup-count" id="cup-count">6 CUP</span>
+        <span class="cup-count" id="cup-count">6 cup tersisa</span>
       </div>
 
       <div class="cup-stage" id="cup-stage" data-phase="idle" aria-label="Area cup"></div>
@@ -184,8 +184,8 @@
   <div class="q-panel" role="dialog" aria-modal="true" aria-labelledby="q-text">
     <div class="q-top">
       <span class="zonk-badge">ZONK!</span>
-      <span class="q-progress" id="q-progress">SOAL 01 / 25</span>
-      <span class="q-ball" id="q-ball">&#9679; 0 BOLA</span>
+      <span class="q-progress" id="q-progress">Pertanyaan 01 dari 25</span>
+      <span class="q-ball" id="q-ball">&#9679; 0 bola</span>
     </div>
 
     <h2 class="q-text" id="q-text">&mdash;</h2>
@@ -201,11 +201,11 @@
     </div>
 
     <div class="q-actions" id="q-actions">
-      <button class="btn btn-primary btn-block" id="btn-confirm" type="button" disabled>KONFIRMASI JAWABAN</button>
-      <button class="btn btn-skip btn-block" id="btn-skip" type="button">SKIP SOAL &middot; &minus;1 BOLA &middot; +2 NILAI</button>
+      <button class="btn btn-primary btn-block" id="btn-confirm" type="button" disabled>Catat jawaban</button>
+      <button class="btn btn-skip btn-block" id="btn-skip" type="button">Lewati &middot; −1 bola &middot; +2 nilai</button>
     </div>
 
-    <button class="btn btn-again btn-block" id="btn-again" type="button" hidden>COBA LAGI <span class="btn-arrow">&rarr;</span></button>
+    <button class="btn btn-again btn-block" id="btn-again" type="button" hidden>Coba lagi <span class="btn-arrow">&rarr;</span></button>
   </div>
 </div>
 

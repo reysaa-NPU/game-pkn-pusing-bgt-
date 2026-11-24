@@ -342,7 +342,7 @@ function clearSecret(cup) {
 
 function updateCupCount() {
   const count = state.cups.filter((cup) => cup.active).length;
-  $('#cup-count').textContent = `${count} CUP`;
+  $('#cup-count').textContent = `${count} cup tersisa`;
 }
 
 function updateCupLabels() {
@@ -384,7 +384,7 @@ function updateHUD() {
   $('#hud-nilai').textContent = state.nilai;
   $('#hud-soal').textContent = `${state.soalIndex}/${CONFIG.TOTAL_SOAL}`;
   $('#hud-bar-fill').style.width = `${(state.soalIndex / CONFIG.TOTAL_SOAL) * 100}%`;
-  $('#q-ball').innerHTML = `&#9679; ${state.poin} BOLA`;
+  $('#q-ball').innerHTML = `&#9679; ${state.poin} bola`;
 
   const skipBtn = $('#btn-skip');
   if (skipBtn && state.phase === 'question' && !state.questionResolved) {
@@ -575,18 +575,28 @@ function openQuestion() {
   }
 
   const q = state.soalDeck[state.soalIndex];
-  state.activeSoal = q;
+  // Acak pilihan tanpa kehilangan kunci jawaban.
+  const pilihanAcak = shuffleArray(q.pilihan.map((text, index) => ({
+    text,
+    benar: index === q.jawaban
+  })));
+  state.activeSoal = {
+    ...q,
+    pilihan: pilihanAcak.map((item) => item.text),
+    jawaban: pilihanAcak.findIndex((item) => item.benar)
+  };
+  const activeQuestion = state.activeSoal;
   state.selectedOption = null;
   state.questionResolved = false;
   setPhase('question');
 
-  $('#q-progress').textContent = `SOAL ${pad2(state.soalIndex + 1)} / ${CONFIG.TOTAL_SOAL}`;
-  $('#q-text').textContent = q.pertanyaan;
+  $('#q-progress').textContent = `Pertanyaan ${pad2(state.soalIndex + 1)} dari ${CONFIG.TOTAL_SOAL}`;
+  $('#q-text').textContent = activeQuestion.pertanyaan;
   updateHUD();
 
   const wrap = $('#q-options');
   wrap.innerHTML = '';
-  q.pilihan.forEach((text, i) => {
+  activeQuestion.pilihan.forEach((text, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'option';
@@ -617,7 +627,7 @@ function openQuestion() {
   $('#q-actions').hidden = false;
   const confirm = $('#btn-confirm');
   confirm.disabled = true;
-  confirm.textContent = 'KONFIRMASI JAWABAN';
+  confirm.textContent = 'Catat jawaban';
 
   const skip = $('#btn-skip');
   skip.disabled = state.poin < CONFIG.BIAYA_SKIP;
